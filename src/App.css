@@ -94,3 +94,13 @@
     transform: rotate(360deg);
   }
 }
+
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  height: 100vh;
+
+  
+user-select: none;
+}
