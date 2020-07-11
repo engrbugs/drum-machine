@@ -52,11 +52,8 @@ const KEYS = [{
 
 
 class Box extends React.Component {
-  constructor(props) {
-    super(props);
-    this.playSound = this.playSound.bind(this);
-  }
-  playSound(e) {
+
+  playSound = (e) => {
     const sound = document.getElementById(this.props.keyTrigger);
     console.log(sound.currentSrc);
     sound.currentTime = 0;
