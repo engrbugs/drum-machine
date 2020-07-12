@@ -55,16 +55,6 @@ class Box extends React.Component {
   constructor(props) {
     super(props);
     this.audio = React.createRef();
-    
-  }
-
-
-
-  componentDidMount() {
-    document.addEventListener('keydown', this.handleKeyPress);
-  }
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.handleKeyPress);
   }
 
   handleKeyPress = (e)=> {
@@ -77,6 +67,14 @@ class Box extends React.Component {
     }
   }
 
+
+
+  componentDidMount() {
+    document.addEventListener('keydown', this.handleKeyPress);
+  }
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleKeyPress);
+  }
 
 
   playSound = () => {
@@ -117,6 +115,9 @@ class App extends React.Component {
   render() {
     return (
     <div id="display" className="App display">
+              <div className="logo">
+            <div className="inner-logo">{'BeatBox'}<small>{' by angerBUGS'}</small></div>
+          </div>
       {KEYS.map((key, idx)=>(
         <Box
           clipId={key.keyCode} 

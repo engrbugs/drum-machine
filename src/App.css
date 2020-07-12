@@ -1,7 +1,22 @@
 * {
   box-sizing: border-box ;
 }
-
+.logo {
+  position: relative;
+  top: -107px;
+  right: -196px;
+  }
+  
+.inner-logo {
+  font-family: 'Fira Code', monospace;
+  font-weight: bold;
+  font-size: 20px;
+  position: absolute;
+  width: max-content;
+}
+small {
+  font-size: 12px;
+}
 .box {
   border: 2px solid #333;
   border-radius: 4px;
@@ -32,7 +47,9 @@
   border-radius: 4px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
   background-color: #fff;
+  
   padding: 20px;
+  padding-top: 60px;
   align-items: center;
   justify-content: center;
 }
