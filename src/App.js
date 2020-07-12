@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
@@ -52,8 +52,34 @@ const KEYS = [{
 
 
 class Box extends React.Component {
+  constructor(props) {
+    super(props);
+    this.audio = React.createRef();
+    
+  }
 
-  playSound = (e) => {
+
+
+  componentDidMount() {
+    document.addEventListener('keydown', this.handleKeyPress);
+  }
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleKeyPress);
+  }
+
+  handleKeyPress = (e)=> {
+    if (e.keyCode === this.props.keyCode) {
+      const parent = document.getElementById(this.props.keyTrigger);
+      parent.parentNode.classList.toggle('box-active');
+      console.log(parent.parentNode);
+      this.playSound();
+      setTimeout(() => parent.parentNode.classList.toggle('box-active'), 100);
+    }
+  }
+
+
+
+  playSound = () => {
     const sound = document.getElementById(this.props.keyTrigger);
     console.log(sound.currentSrc);
     sound.currentTime = 0;
@@ -61,11 +87,12 @@ class Box extends React.Component {
   }
   render () {
     return  (
-      <div id={this.props.clipId}
+      <div id={this.props.keyCode}
         onClick={this.playSound} 
+        ref={this.audio}
         className="box" 
          >
-          <audio className='clip' id={this.props.keyTrigger} src={this.props.clip}></audio>
+          <audio className='clip'  id={this.props.keyTrigger} src={this.props.clip}></audio>
           {this.props.keyTrigger}
       </div>
 
@@ -92,7 +119,7 @@ class App extends React.Component {
     <div id="display" className="App display">
       {KEYS.map((key, idx)=>(
         <Box
-          clipId={idx} 
+          clipId={key.keyCode} 
 					clip={key.url}
 					keyTrigger={key.keyTrigger}
 					keyCode={key.keyCode} />

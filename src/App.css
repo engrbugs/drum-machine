@@ -19,9 +19,10 @@
   cursor: pointer;
 }
 
+.box-active,
 .box:active {
   opacity: 0.8;
-  transform: scale(.95);
+  transform: scale(0.95);
 }
 
 .display {
