@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import 'animate.css/animate.css';
+import $ from "jquery";
 
 const KEYS = [{
   keyCode: 81,
@@ -115,7 +117,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      display: String.fromCharCode(160),
+      display: 'hdsahks'
     }
     this.displayClipName = this.displayClipName.bind(this);
   }
@@ -123,7 +125,52 @@ class App extends React.Component {
       this.setState({
         display: name
       });
+
+
+      // reset the transition by...
+        // e.preventDefault();
+        
+        // -> removing the class
+        
+        // -> triggering reflow /* The actual magic */
+        // without this it wouldn't work. Try uncommenting the line and the transition won't be retriggered.
+        // This was, from the original tutorial, will no work in strict mode. Thanks Felis Phasma! The next uncommented line is the fix.
+        // element.offsetWidth = element.offsetWidth;
+        // setTimeout(() => $("#display-inner").style.animation='none',10);
+        var $target = $('#display-inner');
+        $target.removeClass('animate__animated animate__bounceOut');
+        setTimeout(() => $target.addClass('animate__animated animate__bounceOut'),100);
+        
+        // -> triggering reflow /* The actual magic */
+        // without this it wouldn't work. Try uncommenting the line and the transition won't be retriggered.
+        // This was, from the original tutorial, will no work in strict mode. Thanks Felis Phasma! The next uncommented line is the fix.
+        // element.offsetWidth = element.offsetWidth;
+        
+       
+
+      // setTimeout(() => $("#display-inner").addClass('animate__animated animate__bounceOut'), 100);
+      // $("#display-inner").removeClass('animate__animated animate__bounceOut').addClass('animate__animated animate__bounceOut');
+
+      
   }
+  onAnimationEnd2 = (e) => {
+    var $target = $('#display-inner');
+    $target.removeClass('animate__animated animate__bounceOut');
+    setTimeout(() => $target.addClass('animate__animated animate__bounceOut'),100);
+  };
+  onAnimationEnd1 = (e) => {
+    $("#display-inner").removeClass("animate__animated animate__bounceOut");
+        void $("#display-inner").offsetWidth;
+        $("#display-inner").addClass('animate__animated animate__bounceOut');
+  };
+
+  onAnimationEnd = () => {
+    this.setState({
+      display: String.fromCharCode(160)
+    });
+    $("#display-inner").removeClass("run-animation");
+  };
+
   render() {
     return (
     <div id="drum-machine" className="App display">
@@ -145,8 +192,11 @@ class App extends React.Component {
         // />
         //   </div>
       ))}
-       <div id="display" className="display-text">
-          <div className="inner-text">{this.state.display}</div>
+       <div id="display" className="display-text" onClick={this.onAnimationEnd2}>
+          <div id="display-inner" className="run-animation"
+          onClick={this.onAnimationEnd2}
+          onAnimationStartCapture={this.onAnimationEnd1}
+          onAnimationEnd={this.onAnimationEnd}>{this.state.display}</div>
         </div>
     </div>
     );

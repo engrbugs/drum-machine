@@ -12,6 +12,30 @@
 .inner-text {
   font-family: 'Fira Code', monospace;
 }
+.animate__animated.animate__bounceOut {
+  --animate-duration: 1s;
+}
+
+
+@keyframes my-animation {        
+  from {
+    opacity : 0;
+    left : -500px;
+  }
+  to {
+    opacity : 1;
+    left : 0;
+  }      
+}
+
+.run-animation {
+  position: relative;
+  animation: my-animation 5s ease;
+  font-weight: bold;
+}
+
+
+
 
 .logo {
   display: block;
