@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import 'animate.css/animate.css';
-import $ from "jquery";
 
 const KEYS = [{
   keyCode: 81,
@@ -63,13 +61,10 @@ class BeatBox extends React.Component {
     if (e.keyCode === this.props.keyCode) {
       const parent = document.getElementById(this.props.keyTrigger);
       parent.parentNode.classList.toggle('drum-pad-active');
-      console.log(parent.parentNode);
       this.playSound();
       setTimeout(() => parent.parentNode.classList.toggle('drum-pad-active'), 100);
     }
   }
-
-
 
   componentDidMount() {
     this.setState({
@@ -82,10 +77,8 @@ class BeatBox extends React.Component {
     document.removeEventListener('keydown', this.handleKeyPress);
   }
 
-
   playSound = () => {
     const sound = document.getElementById(this.props.keyTrigger);
-    console.log(sound.currentSrc);
     this.props.updateDisplay(this.props.clipId);
     sound.currentTime = 0;
     sound.play();
@@ -95,25 +88,13 @@ class BeatBox extends React.Component {
       <div id={this.props.keyCode}
         onClick={this.playSound} 
         ref={this.audio}
-        className="drum-pad" 
-         >
-          <audio className='clip'  id={this.props.keyTrigger} src={this.props.clip}></audio>
+        className="drum-pad">
+          <audio className='clip'
+          id={this.props.keyTrigger} 
+          src={this.props.clip}></audio>
           {this.props.keyTrigger}
       </div>
-
-      // <div id={this.props.clipId} onClick={this.playSound}
-      // className="box">
-      //   <audio className='clip' id={this.props.keyTrigger} src={this.props.clip}></audio>
-      //   {this.props.keyTrigger}</div>
     )
-
-    
-            // <div className="box" onClick={this.playSound}
-        // text={ key.keyTrigger } key={ idx }>
-        //   { key.keyTrigger }
-        // <audio ref={this.audio} id={key.keyTrigger}src={key.url}
-        // />
-        //   </div>
   }
 }
 
@@ -129,41 +110,32 @@ class App extends React.Component {
       this.setState({
         display: name
       });
-      var $target = $('#display-inner');
-        $target.removeClass('animate__animated animate__bounceOut');
-        setTimeout(() => $target.addClass('animate__animated animate__bounceOut'),100);
+      const parent = document.getElementById("display-inner");
+      parent.classList -= " animate__animated animate__bounceOut";
+      setTimeout(() => parent.classList += " animate__animated animate__bounceOut", 100);
   }
   render() {
     return (
-    <div id="drum-machine" className="App display">
-              <div className="logo">
-            <div className="inner-logo">{'BeatBox'}<small>{' by angerBUGS'}</small></div>
-          </div>
-      {KEYS.map((key, idx)=>(
-        <BeatBox
+      <div id="drum-machine" className="App display">
+        <div className="App-logo">
+          <div className="App-logo-inner">{'BeatBox'}<small>{' by angerBUGS'}</small></div>
+        </div>
+        {KEYS.map((key, idx)=>(
+          <BeatBox
           clipId={key.id} 
 					clip={key.url}
 					keyTrigger={key.keyTrigger}
 					keyCode={key.keyCode} 
 					updateDisplay={this.displayClipName} />
-         
-        // <div className="box" onClick={this.playSound}
-        // text={ key.keyTrigger } key={ idx }>
-        //   { key.keyTrigger }
-        // <audio ref={this.audio} id={key.keyTrigger}src={key.url}
-        // />
-        //   </div>
-      ))}
-       <div id="display" className="display-text" onClick={this.onAnimationEnd2}>
-          <div id="display-inner" className="inner-text"
+        ))}
+        <div id="display" className="display-text">
+          <div id="display-inner" 
+          className="inner-text"
           >{this.state.display}</div>
         </div>
-    </div>
+      </div>
     );
   }
 }
-
-
-
 
 export default App;
