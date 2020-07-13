@@ -58,6 +58,9 @@ const KEYS = [{
 class BeatBox extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      audio1: []
+    };
     this.audio = React.createRef();
   }
   sources = {}
@@ -77,7 +80,7 @@ class BeatBox extends React.Component {
     console.log(this.props.clip);
     this.setState({
       key: this.props.keyCode,
-      audio: new Audio(this.props.clip)
+      audio1: new Audio(this.props.clip)
     });
     // console.log(this.state.audio1);
     document.addEventListener('keydown', this.handleKeyPress);
@@ -93,7 +96,8 @@ class BeatBox extends React.Component {
     console.log(sound.currentSrc);
     this.props.updateDisplay(this.props.clipId);
     sound.currentTime = 0;
-    sound.play();
+    // sound.play();
+    this.state.audio1.play();
   }
   render () {
     return  (
@@ -193,19 +197,10 @@ class App extends React.Component {
 					keyTrigger={key.keyTrigger}
 					keyCode={key.keyCode}
 					updateDisplay={this.displayClipName} />
-
-        // <div className="box" onClick={this.playSound}
-        // text={ key.keyTrigger } key={ idx }>
-        //   { key.keyTrigger }
-        // <audio ref={this.audio} id={key.keyTrigger}src={key.url}
-        // />
-        //   </div>
       ))}
        <div id="display" className="display-text" onClick={this.onAnimationEnd2}>
-          <div id="display-inner" className="run-animation"
-          onClick={this.onAnimationEnd2}
-          onAnimationStartCapture={this.onAnimationEnd1}
-          onAnimationEnd={this.onAnimationEnd}>{this.state.display}</div>
+          <div id="display-inner" className="inner-text"
+          >{this.state.display}</div>
         </div>
     </div>
     );
