@@ -13,7 +13,7 @@
   font-family: 'Fira Code', monospace;
 }
 .animate__animated.animate__bounceOut {
-  --animate-duration: 1s;
+  --animate-duration: .8s;
 }
 
 
