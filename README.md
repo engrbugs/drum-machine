@@ -2,7 +2,6 @@
 
 # See this in action:
 ## [https://engrbugs.github.io/drum-machine/](https://engrbugs.github.io/drum-machine/)
-<br/>
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
