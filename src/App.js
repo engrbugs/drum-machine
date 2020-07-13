@@ -53,17 +53,12 @@ const KEYS = [{
 ];
 
 
-
-
 class BeatBox extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      audio1: []
-    };
     this.audio = React.createRef();
   }
-  sources = {}
+
   handleKeyPress = (e)=> {
     if (e.keyCode === this.props.keyCode) {
       const parent = document.getElementById(this.props.keyTrigger);
@@ -77,12 +72,10 @@ class BeatBox extends React.Component {
 
 
   componentDidMount() {
-    console.log(this.props.clip);
     this.setState({
       key: this.props.keyCode,
-      audio1: new Audio(this.props.clip)
+      audio: new Audio(this.props.clip)
     });
-    // console.log(this.state.audio1);
     document.addEventListener('keydown', this.handleKeyPress);
   }
   componentWillUnmount() {
@@ -91,20 +84,18 @@ class BeatBox extends React.Component {
 
 
   playSound = () => {
-    // const sound = this.audio;
     const sound = document.getElementById(this.props.keyTrigger);
     console.log(sound.currentSrc);
     this.props.updateDisplay(this.props.clipId);
     sound.currentTime = 0;
-    // sound.play();
-    this.state.audio1.play();
+    sound.play();
   }
   render () {
     return  (
       <div id={this.props.keyCode}
-        onClick={this.playSound}
+        onClick={this.playSound} 
         ref={this.audio}
-        className="drum-pad"
+        className="drum-pad" 
          >
           <audio className='clip'  id={this.props.keyTrigger} src={this.props.clip}></audio>
           {this.props.keyTrigger}
@@ -116,7 +107,7 @@ class BeatBox extends React.Component {
       //   {this.props.keyTrigger}</div>
     )
 
-
+    
             // <div className="box" onClick={this.playSound}
         // text={ key.keyTrigger } key={ idx }>
         //   { key.keyTrigger }
@@ -130,7 +121,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      display: String.fromCharCode(160)
+      display: String.fromCharCode(160),
     }
     this.displayClipName = this.displayClipName.bind(this);
   }
@@ -138,52 +129,10 @@ class App extends React.Component {
       this.setState({
         display: name
       });
-      console.log(this.state.display);
-
-      // reset the transition by...
-        // e.preventDefault();
-
-        // -> removing the class
-
-        // -> triggering reflow /* The actual magic */
-        // without this it wouldn't work. Try uncommenting the line and the transition won't be retriggered.
-        // This was, from the original tutorial, will no work in strict mode. Thanks Felis Phasma! The next uncommented line is the fix.
-        // element.offsetWidth = element.offsetWidth;
-        // setTimeout(() => $("#display-inner").style.animation='none',10);
-        var $target = $('#display-inner');
+      var $target = $('#display-inner');
         $target.removeClass('animate__animated animate__bounceOut');
         setTimeout(() => $target.addClass('animate__animated animate__bounceOut'),100);
-
-        // -> triggering reflow /* The actual magic */
-        // without this it wouldn't work. Try uncommenting the line and the transition won't be retriggered.
-        // This was, from the original tutorial, will no work in strict mode. Thanks Felis Phasma! The next uncommented line is the fix.
-        // element.offsetWidth = element.offsetWidth;
-
-
-
-      // setTimeout(() => $("#display-inner").addClass('animate__animated animate__bounceOut'), 100);
-      // $("#display-inner").removeClass('animate__animated animate__bounceOut').addClass('animate__animated animate__bounceOut');
-
-
   }
-  onAnimationEnd2 = (e) => {
-    var $target = $('#display-inner');
-    $target.removeClass('animate__animated animate__bounceOut');
-    setTimeout(() => $target.addClass('animate__animated animate__bounceOut'),100);
-  };
-  onAnimationEnd1 = (e) => {
-    $("#display-inner").removeClass("animate__animated animate__bounceOut");
-        void $("#display-inner").offsetWidth;
-        $("#display-inner").addClass('animate__animated animate__bounceOut');
-  };
-
-  onAnimationEnd = () => {
-    this.setState({
-      display: String.fromCharCode(160)
-    });
-    $("#display-inner").removeClass("run-animation");
-  };
-
   render() {
     return (
     <div id="drum-machine" className="App display">
@@ -192,11 +141,18 @@ class App extends React.Component {
           </div>
       {KEYS.map((key, idx)=>(
         <BeatBox
-          clipId={key.id}
+          clipId={key.id} 
 					clip={key.url}
 					keyTrigger={key.keyTrigger}
-					keyCode={key.keyCode}
+					keyCode={key.keyCode} 
 					updateDisplay={this.displayClipName} />
+         
+        // <div className="box" onClick={this.playSound}
+        // text={ key.keyTrigger } key={ idx }>
+        //   { key.keyTrigger }
+        // <audio ref={this.audio} id={key.keyTrigger}src={key.url}
+        // />
+        //   </div>
       ))}
        <div id="display" className="display-text" onClick={this.onAnimationEnd2}>
           <div id="display-inner" className="inner-text"
